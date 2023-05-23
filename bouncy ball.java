@@ -4,7 +4,7 @@ import java.util.Arrays;
 class Ball {
     static public ArrayList<Ball> balls = new ArrayList<Ball>();
     int[] pos = { 0, 0 };
-    int[] energy = { 0, 0 };
+    double[] energy = { 0.0, 0.0 };
     boolean moved=false;
 
     public void giveEnergy(int x, int y) {
@@ -50,6 +50,15 @@ class Ball {
             energy[1]+=1;
             moved=true;
         }
+
+        if (energy[0]>-1 && energy[0] < 1){
+            energy[0]=0.0;
+        }
+        if (energy[1]>-1 && energy[1] < 1){
+            energy[1]=0.0;
+        }
+
+
         if (after[0] == pos[0] && after[1] == pos[1]){
             return false;
         }
@@ -77,16 +86,16 @@ class Board {
 
     void checkForBounce(Ball ball){
         if (ball.pos[0]==data[0].length-1 && ball.energy[0]>0){
-            ball.energy[0]*=-1;
+            ball.energy[0]*=-.9;
         }
         else if(ball.pos[0]==0 && ball.energy[0]<0){
-            ball.energy[0]*=-1; 
+            ball.energy[0]*=-.9; 
         }
         if (ball.pos[1]==data.length-1 && ball.energy[1]>0){
-            ball.energy[1]*=-1;
+            ball.energy[1]*=-.9;
         }
         else if(ball.pos[1]==0 && ball.energy[1]<0){
-            ball.energy[1]*=-1; 
+            ball.energy[1]*=-.9; 
         }
     }
 
@@ -98,7 +107,7 @@ class Board {
                 
                 
                 if (item != null) {
-                    System.out.println(""+innerArray+","+itemIndex+", "+item);
+                    //System.out.println(""+innerArray+","+itemIndex+", "+item);
 
                     Ball obj = (Ball) item;
                     
@@ -144,7 +153,7 @@ class Board {
 class Main {
     
     public static void main(String args[]) {
-        boolean debug= false;
+        boolean debug= true;
         
 
 
@@ -159,8 +168,11 @@ class Main {
             
             board.update();
             System.out.println(board);
+
             for (Ball item : Ball.balls){
+                if (ball.pos[1]!=board.data.length){
                 item.giveEnergy(0, 1);
+                }
             }
 
 

@@ -50,7 +50,6 @@ class Ball {
             energy[1]+=1;
             moved=true;
         }
-        System.out.println("" + after[0]+","+after[1] + " =" + pos[0] +","+pos[1]+ ": "+ after.equals(pos));
         if (after[0] == pos[0] && after[1] == pos[1]){
             return false;
         }
@@ -143,11 +142,10 @@ class Board {
 }
 
 class Main {
-    static boolean debug= false;
+    
     public static void main(String args[]) {
-        if (args[0]=="verbal"){
-debug = true;
-        }
+        boolean debug= false;
+        
 
 
         Board board = new Board();
@@ -161,6 +159,11 @@ debug = true;
             
             board.update();
             System.out.println(board);
+            for (Ball item : Ball.balls){
+                item.giveEnergy(0, 1);
+            }
+
+
 if (debug){
             System.out.println(ball.describe());
             System.out.println("Ended");

@@ -86,16 +86,16 @@ class Board {
 
     void checkForBounce(Ball ball){
         if (ball.pos[0]==data[0].length-1 && ball.energy[0]>0){
-            ball.energy[0]*=-.9;
+            ball.energy[0]*=-.5;
         }
         else if(ball.pos[0]==0 && ball.energy[0]<0){
-            ball.energy[0]*=-.9; 
+            ball.energy[0]*=-.5; 
         }
         if (ball.pos[1]==data.length-1 && ball.energy[1]>0){
-            ball.energy[1]*=-.9;
+            ball.energy[1]*=-.5;
         }
         else if(ball.pos[1]==0 && ball.energy[1]<0){
-            ball.energy[1]*=-.9; 
+            ball.energy[1]*=-.5; 
         }
     }
 
@@ -170,8 +170,10 @@ class Main {
             System.out.println(board);
 
             for (Ball item : Ball.balls){
-                if (ball.pos[1]!=board.data.length){
-                item.giveEnergy(0, 1);
+                System.out.println(""+item.pos[0] +"," +item.pos[1]);
+                if (item.pos[0]!=board.data.length-1){
+                    item.giveEnergy(0, 1);
+                   
                 }
             }
 
@@ -182,11 +184,13 @@ if (debug){
 
         }
             try {
-                Thread.sleep(1000);
+                Thread.sleep(500);
             } catch (InterruptedException e) {
 
                 e.printStackTrace();
+                
             }
+            System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
         }
     }
 }

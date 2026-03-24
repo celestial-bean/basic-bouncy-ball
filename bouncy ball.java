@@ -43,11 +43,11 @@ class Ball {
          */
         if (energy[0] > 0) {
             pos[0] += 1;
-            energy[0] -= 1;
+            //energy[0] -= 1;
             moved = true;
         } else if (energy[0] < 0) {
             pos[0] -= 1;
-            energy[0] += 1;
+           // energy[0] += 1;
             moved = true;
         }
         if (energy[1] > 0) {
@@ -88,18 +88,17 @@ class Ball {
 class Board {
     Object[][] data;
     void checkForBounce(Ball ball) {
-
-        System.out.println(ball.getPosLeft()+" "+ball.getPosRight()+" "+ball.getPosTop()+" "+ball.getPosBottom());
-
+        float elasticity = 1;
+ 
         if (ball.getPosRight() == data[0].length-1 && ball.energy[0] > 0) {
-            ball.energy[0] *= -.5;
+            ball.energy[0] *= -elasticity;
         } else if (ball.getPosLeft() == 0 && ball.energy[0] < 0) {
-            ball.energy[0] *= -.5;
+            ball.energy[0] *= -elasticity;
         }
         if (ball.getPosTop() == 0 && ball.energy[1] < 0) {
-            ball.energy[1] *= -.5;
+            ball.energy[1] *= -elasticity;
         } else if (ball.getPosBottom() == data.length-1 && ball.energy[1] > 0) {
-            ball.energy[1] *= -.5;
+            ball.energy[1] *= -elasticity;
         }
     }
 
@@ -141,7 +140,7 @@ class Board {
                             x <= ballMaxX) {
                         result += "0";
                     } else {
-                        result += "X";
+                        result += "  ";
                     }
                 }
             }
@@ -153,7 +152,7 @@ class Board {
         // if (data[i][o] == null) {
         // result += "0";
         // } else {
-        // result += "X";
+        // result += "  ";
         // }
         // }
         // result += "\n";
@@ -180,7 +179,7 @@ class Main {
         while (true) {
 
             board.update();
-            System.out.println(board);
+            System.out.print("\r"+board);
 
             for (Ball item : Ball.balls) {
                 if (item.getPosBottom() != board.data.length - 1) {     //gravity
@@ -197,7 +196,7 @@ class Main {
                 System.out.println("Ended");
             }
             try {
-                Thread.sleep(500);
+                Thread.sleep(300);
             } catch (InterruptedException e) {
                 e.printStackTrace();
 

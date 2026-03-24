@@ -50,7 +50,13 @@ class Ball {
             energy[0] += 1;
             moved = true;
         }
-
+        if (energy[1] > 0) {
+            pos[1] += 1;
+            moved = true;
+        } else if (energy[1] < 0) {
+            pos[1] -= 1;
+            moved = true;
+        }
         if (energy[0] > -1 && energy[0] < 1) {
             energy[0] = 0.0;
         }
@@ -71,15 +77,16 @@ class Ball {
                 + "," + energy[1];
     }
 
-    public Ball() {
+    public Ball(int size) {
+        height = size;
+        width = size;
         balls.add(this);
         System.out.println("balls array: " + balls.toString());
     }
 }
 
 class Board {
-    Object[][] data = new Object[5][5];
-
+    Object[][] data;
     void checkForBounce(Ball ball) {
 
         System.out.println(ball.getPosLeft()+" "+ball.getPosRight()+" "+ball.getPosTop()+" "+ball.getPosBottom());
@@ -89,9 +96,9 @@ class Board {
         } else if (ball.getPosLeft() == 0 && ball.energy[0] < 0) {
             ball.energy[0] *= -.5;
         }
-        if (ball.getPosTop() == data.length-1 && ball.energy[1] > 0) {
+        if (ball.getPosTop() == 0 && ball.energy[1] < 0) {
             ball.energy[1] *= -.5;
-        } else if (ball.getPosBottom() == 0 && ball.energy[1] < 0) {
+        } else if (ball.getPosBottom() == data.length-1 && ball.energy[1] > 0) {
             ball.energy[1] *= -.5;
         }
     }
@@ -155,7 +162,9 @@ class Board {
         return result;
     }
 
-    Board() {
+    Board(int width, int height) {
+    this.data = new Object[width][height];
+
     }
 }
 
@@ -163,8 +172,8 @@ class Main {
     public static void main(String args[]) {
         boolean debug = true;
 
-        Board board = new Board();
-        Ball ball = new Ball();
+        Board board = new Board(8, 8);
+        Ball ball = new Ball(2);
         board.data[0][0] = ball;
         ball.giveEnergy(9, 7);
         System.out.println(board);
@@ -174,12 +183,12 @@ class Main {
             System.out.println(board);
 
             for (Ball item : Ball.balls) {
-                if (item.pos[1] != board.data.length - 1) {
-                    item.giveEnergy(0, 1);
+                if (item.getPosBottom() != board.data.length - 1) {     //gravity
+                    item.giveEnergy(0, 1);      
                 }
-                if (item.pos[1] == board.data.length - 1) {
-                    item.giveEnergy(0, -10);
-                }
+                // else if (item.getPosBottom() == board.data.length - 1) {
+                //     item.giveEnergy(0, -10);
+                // }
             }
             
 
